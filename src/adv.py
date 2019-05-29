@@ -56,11 +56,26 @@ new_player = Player('new', 'outside')
 playing = True
 
 while playing:
+    print(room['foyer'])
     print('Location: ', room[new_player.room].name)
     print('Location Description: ', room[new_player.room].description)
+    #collect user input and set new_player.room to whatever the direction_to points to. 
     direction = input('Which way? (n/e/s/w) or press q to quit \n').lower().strip()
     if direction == 'q':
         print('laters')
         playing = False
+    if direction == 'n':
+        new_room = room[new_player.room].n_to
+        new_player.room = new_room
+    if direction == 'e':
+        new_room = room[new_player.room].e_to
+        new_player.room = new_room
+    if direction == 's':
+        new_room = room[new_player.room].s_to
+        new_player.room = new_room
+    if direction == 'w':
+        new_room = room[new_player.room].w_to
+        new_player.room = new_room
+
 
     
