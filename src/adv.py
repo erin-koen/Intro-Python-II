@@ -5,7 +5,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,7 +21,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 
 # Link rooms together
@@ -48,7 +47,7 @@ room['treasure'].s_to = room['narrow']
 # * Waits for user input and decides what to do.
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
+# Print an error message if the movement isn't allwed.
 #
 # If the user enters "q", quit the game.
 
@@ -57,4 +56,11 @@ new_player = Player('new', 'outside')
 playing = True
 
 while playing:
-    print('Location: ')
+    print('Location: ', room[new_player.room].name)
+    print('Location Description: ', room[new_player.room].description)
+    direction = input('Which way? (n/e/s/w) or press q to quit \n').lower().strip()
+    if direction == 'q':
+        print('laters')
+        playing = False
+
+    
