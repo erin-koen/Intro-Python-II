@@ -3,23 +3,25 @@ from player import Player
 
 # Declare all the rooms
 
+
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mouth beckons"),
+                     "North of you, the cave mouth beckons", []),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", []),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""",[]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -53,26 +55,7 @@ room['treasure'].s_to = room['narrow']
 
 
 
-#function if no move is available
-def bad_move():
-    print("There's no room in that direction.")
-    return
 
-# function to move a player from one room to the next
-def attempt_move(player, direction):
-
-    # turn direction into the movement attribute
-    attribute = direction + "_to"
-
-    # check player's current room for movement attribute
-    if hasattr(player.room, attribute):
-        next_room = getattr(player.room, attribute)
-        # set attribute value to current value
-        player.room = next_room
-        return
-    # let em know if it doesn't exist
-    else:
-        bad_move()
 
 playing = True
 new_player = Player('new', room['outside'])
@@ -80,12 +63,15 @@ new_player = Player('new', room['outside'])
 while playing:
     print('Location: ', new_player.current_room.name)
     print('Location Description: ', new_player.current_room.description)
-   
-    #collect user input and set new_player.room to whatever the direction_to points to. 
-    direction = input('Which way? (n/e/s/w) or press q to quit \n').lower().strip()
-   
+
+    # collect user input and set new_player.room to whatever the direction_to points to.
+    direction = input(
+        'Which way? (n/e/s/w) or press q to quit \n').lower().strip()
+
     if direction == 'q':
         print('laters')
         playing = False
+    elif direction in ['n', 's', 'e', 'w']:
+        new_player.attempt_move(direction)
     else:
-        attempt_move(new_player, direction)
+        print("that isn't a valid direction you dope.")
