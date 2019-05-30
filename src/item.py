@@ -3,5 +3,6 @@ class Item:
         self.name = name
         self.description = description
         
-        def __str__(self):
-        return f'An item named {self.name}.'
+    def __str__(self):
+        return f'An item named {self.name}'
+    

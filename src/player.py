@@ -13,7 +13,7 @@ class Player:
      # function to pick up items and store them in inventory
     def get_item(self, item):
         self.player_inventory.append(item)
-        return
+        # return
 
     def drop_item(self, item):
         self.player_inventory.remove(item)

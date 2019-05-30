@@ -9,3 +9,15 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+
+    def __str__(self):
+        return f'An room named {self.name}.'
+    
+    def lose_item(self, item):
+        del self.room_inventory.remove[item]
+        # return
+    
+    def get_item(self, item):
+        self.room_inventory.append(item)
+        return
+    

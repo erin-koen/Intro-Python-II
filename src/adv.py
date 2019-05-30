@@ -44,8 +44,6 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 
-
-
 playing = True
 new_player = Player('new', room['outside'])
 
@@ -54,14 +52,14 @@ while playing:
     print('Location Description: ', new_player.current_room.description)
     items = [item.name for item in new_player.current_room.room_inventory]
     seperator = ', '
-    print('Items Available: ', seperator.join(items) )
+    print('Items Available: ', seperator.join(items))
 
     # collect user input and set new_player.room to whatever the direction_to points to.
     command = input(
         'Which way? (n/e/s/w) or press q to quit \n').lower().strip()
     command_list = command.split(' ')
     if len(command_list) < 2:
-        #if the command is a single word, interpret and proceed as needed
+        # if the command is a single word, interpret and proceed as needed
         if command == 'q':
             print('laters')
             playing = False
@@ -69,11 +67,19 @@ while playing:
             new_player.attempt_move(command)
         else:
             print("that isn't a valid command you dope.")
-    else: 
-        #if the command is more than one word, evaluate first word for 'get' or 'drop' and the second one for the item name
+    else:
+        # if the command is more than one word, evaluate first word for 'get' or 'drop' and the second one for the item name
         if command_list[0] == 'get' and command_list[1] in items:
-            #call the player get command on the item
-            new_player.get_item(command_list[1])
-            #call the room give command on the item
-            print('not here yet')
+            # identify the item object by name
+            item_in_question = [
+                item for item in new_player.current_room.room_inventory if item.name == command_list[1]]
 
+            # call the player get command on the item
+            new_player.get_item(item_in_question)
+            print(79)
+            # call the room give command on the item's index
+            new_player.current_room.lose_item(
+                new_player.current_room.room_inventory.index(item_in_question))
+
+            print('room', new_player.current_room.room_inventory,
+                  'player', new_player.player_inventory)
