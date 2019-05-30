@@ -57,13 +57,23 @@ while playing:
     print('Items Available: ', seperator.join(items) )
 
     # collect user input and set new_player.room to whatever the direction_to points to.
-    direction = input(
+    command = input(
         'Which way? (n/e/s/w) or press q to quit \n').lower().strip()
+    command_list = command.split(' ')
+    if len(command_list) < 2:
+        #if the command is a single word, interpret and proceed as needed
+        if command == 'q':
+            print('laters')
+            playing = False
+        elif command in ['n', 's', 'e', 'w']:
+            new_player.attempt_move(command)
+        else:
+            print("that isn't a valid command you dope.")
+    else: 
+        #if the command is more than one word, evaluate first word for 'get' or 'drop' and the second one for the item name
+        if command_list[0] == 'get' and command_list[1] in items:
+            #call the player get command on the item
+            new_player.get_item(command_list[1])
+            #call the room give command on the item
+            print('not here yet')
 
-    if direction == 'q':
-        print('laters')
-        playing = False
-    elif direction in ['n', 's', 'e', 'w']:
-        new_player.attempt_move(direction)
-    else:
-        print("that isn't a valid direction you dope.")

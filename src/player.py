@@ -7,8 +7,10 @@ class Player:
         self.name = name
         self.current_room = current_room
         self.player_inventory = []
-    # function to pick up items and store them in inventory
-
+   
+    def __str__(self):
+        return f'A player named {self.name}.'
+     # function to pick up items and store them in inventory
     def get_item(self, item):
         self.player_inventory.append(item)
         return
