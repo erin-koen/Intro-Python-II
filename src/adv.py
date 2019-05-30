@@ -51,7 +51,7 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-new_player = Player('new', room['outside'])
+
 
 #function if no move is available
 def bad_move():
@@ -75,6 +75,7 @@ def attempt_move(player, direction):
         bad_move()
 
 playing = True
+new_player = Player('new', room['outside'])
 
 while playing:
     print('Location: ', new_player.current_room.name)
