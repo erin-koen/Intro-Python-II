@@ -9,11 +9,11 @@ class Player:
         self.player_inventory = []
     # function to pick up items and store them in inventory
 
-    def get_item_player(self, item):
+    def get_item(self, item):
         self.player_inventory.append(item)
         return
 
-    def drop_item_player(self, item):
+    def drop_item(self, item):
         self.player_inventory.remove(item)
         return
 
@@ -38,3 +38,4 @@ class Player:
         # let em know if it doesn't exist
         else:
             self.bad_move()
+
