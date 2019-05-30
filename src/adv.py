@@ -51,31 +51,38 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-new_player = Player('new', 'outside')
+new_player = Player('new', room['outside'])
+
+#function if no move is available
+def bad_move():
+    print("There's no room in that direction.")
+    return
+
+# function to move a player from one room to the next
+def attempt_move(player, direction):
+    # turn direction into the movement attribute
+    attribute = direction + "_to"
+    print("this is the", attribute)
+    # check player's current room for movement attribute
+
+    if hasattr(player.room, attribute):
+        next_room = getattr(player.room, attribute)
+        # set attribute value to current value
+        player.room = next_room
+        return
+    else:
+        bad_move()
 
 playing = True
 
 while playing:
     print(room['foyer'])
-    print('Location: ', room[new_player.room].name)
-    print('Location Description: ', room[new_player.room].description)
+    print('Location: ', new_player.room.name)
+    print('Location Description: ', new_player.room.description)
     #collect user input and set new_player.room to whatever the direction_to points to. 
     direction = input('Which way? (n/e/s/w) or press q to quit \n').lower().strip()
     if direction == 'q':
         print('laters')
         playing = False
-    if direction == 'n':
-        new_room = room[new_player.room].n_to
-        new_player.room = new_room
-    if direction == 'e':
-        new_room = room[new_player.room].e_to
-        new_player.room = new_room
-    if direction == 's':
-        new_room = room[new_player.room].s_to
-        new_player.room = new_room
-    if direction == 'w':
-        new_room = room[new_player.room].w_to
-        new_player.room = new_room
-
-
-    
+    else:
+        attempt_move(new_player, direction)
