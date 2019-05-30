@@ -17,7 +17,7 @@ class Player:
 
     def drop_item(self, item):
         self.player_inventory.remove(item)
-        return
+        # return
 
     # function if no move is available
     def bad_move(self):

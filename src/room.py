@@ -11,13 +11,13 @@ class Room:
         self.w_to = None
 
     def __str__(self):
-        return f'An room named {self.name}.'
+        return f'A room named {self.name}.'
     
     def lose_item(self, item):
-        del self.room_inventory.remove[item]
+        self.room_inventory.remove(item)
         # return
     
-    def get_item(self, item):
+    def gain_item(self, item):
         self.room_inventory.append(item)
-        return
+        # return
     

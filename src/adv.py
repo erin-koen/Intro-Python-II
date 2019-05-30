@@ -50,13 +50,15 @@ new_player = Player('new', room['outside'])
 while playing:
     print('Location: ', new_player.current_room.name)
     print('Location Description: ', new_player.current_room.description)
-    items = [item.name for item in new_player.current_room.room_inventory]
+    room_items = [item.name for item in new_player.current_room.room_inventory]
+    player_items = [item.name for item in new_player.player_inventory]
     seperator = ', '
-    print('Items Available: ', seperator.join(items))
+    print('Items available in this room: ', seperator.join(room_items))
+    print('Items you are carrying: ', seperator.join(player_items))
 
     # collect user input and set new_player.room to whatever the direction_to points to.
     command = input(
-        'Which way? (n/e/s/w) or press q to quit \n').lower().strip()
+        ' *** Which way? (n/e/s/w) or press q to quit \n \n ** * Show your inventory by pressing "i"\n\n ** * You can pick up an item by typing "Get itemName"\n \n ** * You can drop an item by typing "Drop itemName" \n\n ** * press q to quit \n \n ').lower().strip()
     command_list = command.split(' ')
     if len(command_list) < 2:
         # if the command is a single word, interpret and proceed as needed
@@ -65,21 +67,39 @@ while playing:
             playing = False
         elif command in ['n', 's', 'e', 'w']:
             new_player.attempt_move(command)
+        elif command == 'i':
+            print('Items you are carrying: ', seperator.join(player_items))
         else:
             print("that isn't a valid command you dope.")
     else:
         # if the command is more than one word, evaluate first word for 'get' or 'drop' and the second one for the item name
-        if command_list[0] == 'get' and command_list[1] in items:
+        if command_list[0] == 'get' and command_list[1] in room_items:
+
             # identify the item object by name
             item_in_question = [
-                item for item in new_player.current_room.room_inventory if item.name == command_list[1]]
+                item for item in new_player.current_room.room_inventory if item.name == command_list[1]][0]
 
             # call the player get command on the item
             new_player.get_item(item_in_question)
-            print(79)
-            # call the room give command on the item's index
-            new_player.current_room.lose_item(
-                new_player.current_room.room_inventory.index(item_in_question))
 
-            print('room', new_player.current_room.room_inventory,
-                  'player', new_player.player_inventory)
+            # call the item on_take command to print the message
+            item_in_question.on_take()
+
+            # call the room lose_item command on the item to finalize the transfer
+            new_player.current_room.lose_item((item_in_question))
+
+        elif command_list[0] == 'drop' and command_list[1] in player_items:
+
+            # identify the item object by name
+            # (need to handle what happens if more than one item has the same name, come back to that)
+            item_in_question = [
+                item for item in new_player.player_inventory if item.name == command_list[1]][0]
+            print(item_in_question.name)
+            # call the player get command on the item
+            new_player.drop_item(item_in_question)
+
+            # call the item on_take command to print the message
+            item_in_question.on_drop()
+
+            # call the room lose_item command on the item to finalize the transfer
+            new_player.current_room.gain_item(item_in_question)
