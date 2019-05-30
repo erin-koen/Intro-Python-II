@@ -60,25 +60,29 @@ def bad_move():
 
 # function to move a player from one room to the next
 def attempt_move(player, direction):
+
     # turn direction into the movement attribute
     attribute = direction + "_to"
-    print("this is the", attribute)
+
     # check player's current room for movement attribute
     if hasattr(player.room, attribute):
         next_room = getattr(player.room, attribute)
         # set attribute value to current value
         player.room = next_room
         return
+    # let em know if it doesn't exist
     else:
         bad_move()
 
 playing = True
 
 while playing:
-    print('Location: ', new_player.room.name)
-    print('Location Description: ', new_player.room.description)
+    print('Location: ', new_player.current_room.name)
+    print('Location Description: ', new_player.current_room.description)
+   
     #collect user input and set new_player.room to whatever the direction_to points to. 
     direction = input('Which way? (n/e/s/w) or press q to quit \n').lower().strip()
+   
     if direction == 'q':
         print('laters')
         playing = False
