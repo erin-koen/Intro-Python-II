@@ -64,7 +64,6 @@ def attempt_move(player, direction):
     attribute = direction + "_to"
     print("this is the", attribute)
     # check player's current room for movement attribute
-
     if hasattr(player.room, attribute):
         next_room = getattr(player.room, attribute)
         # set attribute value to current value
@@ -76,7 +75,6 @@ def attempt_move(player, direction):
 playing = True
 
 while playing:
-    print(room['foyer'])
     print('Location: ', new_player.room.name)
     print('Location Description: ', new_player.room.description)
     #collect user input and set new_player.room to whatever the direction_to points to. 
